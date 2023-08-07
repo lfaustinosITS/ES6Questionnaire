@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sortable Table</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td id="ageHeader">Age</td>
+        </tr>
+        <tr>
+            <td>Sam</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>John</td>
+            <td>34</td>
+        </tr>
+        <tr>
+            <td>Tim</td>
+            <td>28</td>
+        </tr>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ageHeader = document.getElementById("ageHeader");
+            ageHeader.addEventListener("click", function () {
+                sortTableByAge();
+            });
+        });
+
+        function sortTableByAge() {
+            const table = document.querySelector("table");
+            const rows = Array.from(table.tBodies[0].rows);
+
+            rows.sort(function (a, b) {
+                const ageA = parseInt(a.cells[1].textContent);
+                const ageB = parseInt(b.cells[1].textContent);
+                return ageA - ageB;
+            });
+
+            // Empty the table body
+            while (table.tBodies[0].hasChildNodes()) {
+                table.tBodies[0].removeChild(table.tBodies[0].firstChild);
+            }
+
+            // Re-insert sorted rows in the correct order
+            rows.forEach(function (row) {
+                table.tBodies[0].appendChild(row);
+            });
+        }
+    </script>
+</body>
+
+</html>
