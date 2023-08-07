@@ -1,0 +1,30 @@
+<!-- Add link -->
+<div id="addLinkContainer">
+    <a href="#" id="addLink">Add</a>
+</div>
+<!-- Form template for adding a new candidate -->
+<form id="addCandidateForm" style="display: none;">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" required>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" required>
+    <button type="submit">Add Candidate</button>
+</form>
+
+
+<!-- Table to display candidate information -->
+<table id="candidatesTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows with candidate information will be dynamically added here -->
+    </tbody>
+</table>
