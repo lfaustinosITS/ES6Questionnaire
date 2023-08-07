@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Toggle Example</title>
+    <style>
+        /* Hide the second <p> element of each pair by default */
+        p.content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="toggle">Toggle 1</p>
+    <p class="content">I will be hidden or visible 1</p>
+
+    <p class="toggle">Toggle 2</p>
+    <p class="content">I will be hidden or visible 2</p>
+
+    <p class="toggle">Toggle 3</p>
+    <p class="content">I will be hidden or visible 3</p>
+
+    <p class="toggle">Toggle 4</p>
+    <p class="content">I will be hidden or visible 4</p>
+
+    <script>
+        // Get all the toggle elements using the class name
+        const toggleElements = document.getElementsByClassName("toggle");
+
+        // Add a click event listener to each toggle element
+        for (let i = 0; i < toggleElements.length; i++) {
+            toggleElements[i].addEventListener("click", function () {
+                // Get the next sibling element (the second <p> element) of the clicked toggle element
+                const contentElement = this.nextElementSibling;
+
+                // Toggle the display of the content element when the toggle element is clicked
+                if (contentElement.style.display === "none" || !contentElement.style.display) {
+                    contentElement.style.display = "block";
+                } else {
+                    contentElement.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
