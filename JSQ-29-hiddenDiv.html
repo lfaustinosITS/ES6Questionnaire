@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Show/Hide Example</title>
+    <style>
+        #myDiv {
+            display: none;
+            /* Hide the div at the beginning */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="myDiv">Some text</div>
+    <a id="id1" href="#">Show</a>
+
+    <script>
+        // Get the elements using their IDs
+        const myDiv = document.getElementById("myDiv");
+        const showLink = document.getElementById("id1");
+
+        // Add a click event listener to the link
+        showLink.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Toggle the display of the div when the link is clicked
+            if (myDiv.style.display === "none") {
+                myDiv.style.display = "block";
+            } else {
+                myDiv.style.display = "none";
+            }
+        });
+    </script>
+</body>
+
+</html>
