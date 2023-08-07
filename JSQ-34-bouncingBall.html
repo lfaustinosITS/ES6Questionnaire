@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bouncing Ball Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #ball {
+            position: absolute;
+            left: 30px;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        #scale {
+            position: absolute;
+
+            bottom: 0;
+            width: 5px;
+            height: 400px;
+            background-color: #ccc;
+        }
+
+        .mark {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            top: 0;
+            left: 0;
+        }
+
+        .mark::after {
+            content: attr(data-height);
+            position: relative;
+            left: 0;
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Input box for rebound speed -->
+    <label for="bounceMultiplier">Bounce Multiplier:</label>
+    <input type="number" id="bounceMultiplier" value="90" step="0.1">
+    <span id="percentageSymbol">%</span>
+    <br>
+
+    <!-- Input box for value subtracted from maxHeight -->
+    <label for="maxHeightReduction">Max Height Reduction:</label>
+    <input type="number" id="maxHeightReduction" value="0.5" step="0.1">
+    <span id="inches">in</span>
+    <br>
+    <button id="resetButton">Reset Animation</button>
+    <br>
+    <div id="scale">
+        <!-- Rebound scale -->
+        <div class="mark" data-height="10 in"></div>
+        <div class="mark" data-height="9 in"></div>
+        <div class="mark" data-height="8 in"></div>
+        <div class="mark" data-height="7 in"></div>
+        <div class="mark" data-height="6 in"></div>
+        <div class="mark" data-height="5 in"></div>
+        <div class="mark" data-height="4 in"></div>
+        <div class="mark" data-height="3 in"></div>
+        <div class="mark" data-height="2 in"></div>
+        <div class="mark" data-height="1 in"></div>
+        <div class="mark" data-height="0 in"></div>
+
+    </div>
+    <!-- Ball -->
+    <div id="ball"></div>
+    <script>
+        // Get the elements for animation
+        const ball = document.getElementById("ball");
+        const bounceMultiplierInput = document.getElementById("bounceMultiplier");//Percentage of speed remaining after rebound
+        const maxHeightReductionInput = document.getElementById("maxHeightReduction");//Rebound height reduction in inches
+        const resetButton = document.getElementById("resetButton");
+
+
+        // Set the initial position and velocity of the ball
+        let positionY = 400; // Initial height of the ball in pixels
+        let velocity = 0;    // Initial velocity in pixels per frame
+        const gravity = 0.1;   // Acceleration due to gravity in pixels per frame^2
+        let maxHeight = 400;    //Roof to restrict bounce
+        let animationFrameId;
+        let animationRunning = true;
+
+        function resetAnimation() {
+            cancelAnimationFrame(animationFrameId);
+            positionY = 400;
+            velocity = 0;
+            maxHeight = 400;
+            if (!animationRunning) {
+                animateBall();
+                animationRunning = true;
+            }
+        }
+
+        // Reset Animation event
+        resetButton.addEventListener('click', resetAnimation);
+
+        // Function to animate the ball
+        function animateBall() {
+            const bounceMultiplier = parseFloat(bounceMultiplierInput.value);
+            const maxHeightReduction = parseFloat(maxHeightReductionInput.value);
+            //To obtain a rebound that is reduced by 1 in each rebound, the values must be bounceMultiplier=1, maxHeightReduction=1
+            // Update the position of the ball based on the velocity and gravity
+            positionY -= velocity;
+
+            // Update the velocity with gravity
+            velocity += gravity;
+
+            // Check if the ball hits the floor (positionY reaches 0)
+            if (positionY <= 0) {
+                if (velocity < 1.5 || maxHeight <= 0) {//Stop animation if velocity at impact is low or roof is zero
+                    cancelAnimationFrame(animationFrameId);
+                    animationRunning = false;
+                    return;
+                }
+                // Reverse the direction of the ball and decrease the velocity at impact
+                velocity = -velocity * bounceMultiplier / 100  // Bounce back with reduced velocity
+                maxHeight -= maxHeightReduction * 40;// Decrease roof height  to control rebounce
+                positionY = 0;
+            }
+            if (positionY > maxHeight) {//Stop the ball if it hits the roof
+                velocity = 0;
+                positionY = maxHeight;
+            }
+
+            // Update the position of the ball in the DOM
+            ball.style.bottom = positionY + "px";
+
+            console.log(velocity, maxHeight, positionY, animationRunning)
+            // Request the next animation frame
+            requestAnimationFrame(animateBall);
+        }
+
+        // Start the animation
+        animateBall();
+    </script>
+</body>
+
+</html>
