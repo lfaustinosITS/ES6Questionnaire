@@ -1,0 +1,21 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    background-color: blueviolet;
+    position: relative;
+    transition: all 1s ease;
+    border-radius: 0px;
+}
