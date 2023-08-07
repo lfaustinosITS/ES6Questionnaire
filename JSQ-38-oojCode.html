@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rock, Paper, Scissors</title>
+</head>
+
+<body>
+    <h1>Rock, Paper, Scissors</h1>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div id="result"></div>
+
+    <script>
+        class Game {
+            constructor() {
+                this.choices = ['rock', 'paper', 'scissors'];
+                this.playerChoice = null;
+                this.computerChoice = null;
+            }
+
+            play(playerChoice) {
+                this.playerChoice = playerChoice;
+                this.computerChoice = this.getComputerChoice();
+                this.displayResult();
+            }
+
+            getComputerChoice() {
+                const randomIndex = Math.floor(Math.random() * this.choices.length);
+                return this.choices[randomIndex];
+            }
+
+            displayResult() {
+                const resultDiv = document.getElementById('result');
+                let message;
+
+                if (this.playerChoice === this.computerChoice) {
+                    message = 'It\'s a tie!';
+                } else if (
+                    (this.playerChoice === 'rock' && this.computerChoice === 'scissors') ||
+                    (this.playerChoice === 'paper' && this.computerChoice === 'rock') ||
+                    (this.playerChoice === 'scissors' && this.computerChoice === 'paper')
+                ) {
+                    message = 'You win!';
+                } else {
+                    message = 'You lose!';
+                }
+
+                resultDiv.textContent = `You chose: ${this.playerChoice}, Computer chose: ${this.computerChoice}. ${message}`;
+            }
+        }
+
+        // Create the game object
+        const game = new Game();
+
+        // Get the buttons
+        const rockButton = document.getElementById('rock');
+        const paperButton = document.getElementById('paper');
+        const scissorsButton = document.getElementById('scissors');
+
+        // Assign click events to the buttons
+        rockButton.addEventListener('click', () => game.play('rock'));
+        paperButton.addEventListener('click', () => game.play('paper'));
+        scissorsButton.addEventListener('click', () => game.play('scissors'));
+    </script>
+</body>
+
+</html>
