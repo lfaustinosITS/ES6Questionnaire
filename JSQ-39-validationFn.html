@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Input Validation</title>
+</head>
+
+<body>
+    <h1>Input Validation</h1>
+    <form id="myForm">
+        <label for="userInput">Enter your input:</label>
+        <input type="text" id="userInput" name="userInput" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function isInputValid(input) {
+            // List of prohibited strings
+            const prohibitedStrings = ['1234', 'qwert', 'asdf'];
+
+            // Regular expression to check for 4 or more consecutive characters on the keyboard
+            const consecutiveCharsRegex = /(zxcv|xcvb|cvbn|vbnm|asdf|sdfg|dfgh|fghj|ghjk|hjkl|qwer|wert|erty|rtyu|tyui|yuio|uiop)/i;
+
+
+            // Check if the input contains any prohibited string
+            if (prohibitedStrings.some(str => input.includes(str))) {
+                console.log('array');
+                return false;
+            }
+
+            // Check if the input contains 4 or more consecutive characters on the keyboard
+            if (consecutiveCharsRegex.test(input)) {
+                console.log('regex');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Event handler for form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            const userInputField = document.getElementById('userInput');
+            const userInput = userInputField.value;
+
+            if (isInputValid(userInput)) {
+                console.log('Input is valid:', userInput);
+            } else {
+                console.log('Invalid input. Please correct your input.', userInput);
+            }
+        }
+
+        // Attach the event handler to the form
+        const formElement = document.getElementById('myForm');
+        formElement.addEventListener('submit', handleSubmit);
+    </script>
+</body>
+
+</html>
