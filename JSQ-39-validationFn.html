@@ -12,27 +12,26 @@
         <input type="text" id="userInput" name="userInput" required>
         <button type="submit">Submit</button>
     </form>
+    <h3></h3>
 
     <script>
         function isInputValid(input) {
+            let reversed = '';
+            for (let i = input.length - 1; i >= 0; i--) {
+                reversed += input[i];
+            }
             // List of prohibited strings
             const prohibitedStrings = ['1234', 'qwert', 'asdf'];
 
             // Regular expression to check for 4 or more consecutive characters on the keyboard
-            const consecutiveCharsRegex = /(zxcv|xcvb|cvbn|vbnm|asdf|sdfg|dfgh|fghj|ghjk|hjkl|qwer|wert|erty|rtyu|tyui|yuio|uiop)/i;
+            const consecutiveCharsRegex = /(zxcv|xcvb|cvbn|vbnm|asdf|sdfg|dfgh|fghj|ghjk|hjkl|qwer|wert|erty|rtyu|tyui|yuio|uiop|1234|2345|3456|4567|5678|6789|7890)/i;
 
 
-            // Check if the input contains any prohibited string
-            if (prohibitedStrings.some(str => input.includes(str))) {
-                console.log('array');
+            /// Check if the input contains any prohibited strings or if the input contains 4 or more consecutive characters from the keyboard, in both forward and reverse orders
+            if (prohibitedStrings.some(str => input.includes(str)) || consecutiveCharsRegex.test(input) || prohibitedStrings.some(str => reversed.includes(str)) || consecutiveCharsRegex.test(reversed)) {
                 return false;
             }
 
-            // Check if the input contains 4 or more consecutive characters on the keyboard
-            if (consecutiveCharsRegex.test(input)) {
-                console.log('regex');
-                return false;
-            }
 
             return true;
         }
@@ -42,11 +41,16 @@
             event.preventDefault();
             const userInputField = document.getElementById('userInput');
             const userInput = userInputField.value;
-
+            const validOrInvalid = document.querySelector('h3');
             if (isInputValid(userInput)) {
+
                 console.log('Input is valid:', userInput);
+                validOrInvalid.textContent = 'Valid input';
+                validOrInvalid.style.color = 'green'
             } else {
                 console.log('Invalid input. Please correct your input.', userInput);
+                validOrInvalid.textContent = 'Invalid input';
+                validOrInvalid.style.color = 'red';
             }
         }
 
