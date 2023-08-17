@@ -18,8 +18,13 @@ class Medic extends Person {
 
 function sendPersonData(person) {
     // Assuming you have a URL to send the data to
-    const url = 'https://example.com/senddata';
+    const url = new URL('https://example.com/senddata');
 
+    const params = new URLSearchParams();
+    params.append('name', person.name);
+    params.append('lastName', person.lastName);
+
+    url.search = params.toString();
     // Perform the AJAX GET request
     // I'll use Fetch
     fetch(url, {
