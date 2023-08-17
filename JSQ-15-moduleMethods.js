@@ -11,6 +11,7 @@ var foo = (function () {
 
     function test() {
         console.log("test() method is public.");
+        privateMethod(); // Call the private method from within the module
     }
 
     // Return the public methods as an object
@@ -21,5 +22,5 @@ var foo = (function () {
 })();
 
 foo.bar(); // Output: "bar() method is public."
-foo.test(); // Output: "test() method is public."
+foo.test(); // Output: "test() method is public."followed by "This is a private method."
 foo.privateMethod(); // Output: Error - privateMethod is not a function
