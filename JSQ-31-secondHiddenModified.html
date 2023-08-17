@@ -5,47 +5,46 @@
     <title>Toggle Example</title>
     <style>
         /* Hide the second <p> element of each pair by default */
-        p.content {
+        p:nth-child(even) {
             display: none;
         }
     </style>
 </head>
 
 <body>
-    <p class="toggle">Toggle 1</p>
-    <p class="content">I will be hidden or visible 1</p>
+    <p >Toggle 1</p>
+    <p >I will be hidden or visible 1</p>
 
-    <p class="toggle">Toggle 2</p>
-    <p class="content">I will be hidden or visible 2</p>
+    <p >Toggle 2</p>
+    <p >I will be hidden or visible 2</p>
 
-    <p class="toggle">Toggle 3</p>
-    <p class="content">I will be hidden or visible 3</p>
+    <p >Toggle 3</p>
+    <p >I will be hidden or visible 3</p>
 
-    <p class="toggle">Toggle 4</p>
-    <p class="content">I will be hidden or visible 4</p>
+    <p >Toggle 4</p>
+    <p >I will be hidden or visible 4</p>
 
     <script>
-        // Get all the toggle elements using the class name
-        const toggleElements = document.getElementsByClassName("toggle");
-
-        // Add a click event listener to each toggle element
-        for (let i = 0; i < toggleElements.length; i++) {
-            toggleElements[i].addEventListener("click", function () {
-                // Get the next sibling element (the second <p> element) of the clicked toggle element
-                const contentElement = this.nextElementSibling;
-
-                // Hide all content elements except the one that was clicked
-                const allContentElements = document.getElementsByClassName("content");
-                for (let j = 0; j < allContentElements.length; j++) {
-                    if (allContentElements[j] !== contentElement) {
-                        allContentElements[j].style.display = "none";
-                    }
+        // Add a click event listener to each toggle element using event delegation
+        document.body.addEventListener('click', function () {
+            const clickedElement = event.target;
+            const clickedP = clickedElement.closest('p');
+            if (clickedP && clickedP.matches(':nth-child(odd)')) {
+                const contentElement = clickedP.nextElementSibling;
+                if (contentElement.style.display === "none" || !contentElement.style.display) {
+                    contentElement.style.display = "block";
+                } else {
+                    contentElement.style.display = "none";
                 }
+                const allContentElements = document.querySelectorAll('p');
+                allContentElements.forEach(element => {
+                    if (element!== contentElement && element.matches(':nth-child(even)')){
+                        element.style.display = "none";
+                    }
+                })
+            }
+        })
 
-                // Show the content of the clicked element
-                contentElement.style.display = "block";
-            });
-        }
     </script>
 </body>
 
