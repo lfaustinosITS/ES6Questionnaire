@@ -1,6 +1,9 @@
 // Function to fetch candidate data from the server
+const BASE_URL = 'http://localhost:3000';
+
+
 function fetchCandidates() {
-    return fetch('https://example.com/candidates', {
+    return fetch(`${BASE_URL}/candidates`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -13,47 +16,61 @@ function fetchCandidates() {
 }
 
 // Function to add a new candidate
-function addCandidate(candidate) {
-    return fetch('https://example.com/candidates', {
+function addCandidate(name, lastName, phone) {
+    const url = new URL(`${BASE_URL}/candidates`);
+    const params = new URLSearchParams();
+    params.append('name', name);
+    params.append('lastName', lastName);
+    params.append('phone', phone);
+    url.search = params.toString();
+
+    return fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(candidate)
+        }
     })
-        .then(response => response.json())
-        .catch(error => {
-            console.error('Error adding candidate:', error);
-        });
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error adding candidate:', error);
+    });
 }
 
 // Function to update a candidate
 function updateCandidate(candidateId, updatedCandidate) {
-    return fetch(`https://example.com/candidates/${candidateId}`, {
+    const url = new URL(`${BASE_URL}/candidates/${candidateId}`);
+    const params = new URLSearchParams();
+    params.append('name', updatedCandidate.name);
+    params.append('lastName', updatedCandidate.lastName);
+    params.append('phone', updatedCandidate.phone);
+    url.search = params.toString();
+
+    return fetch(url, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedCandidate)
+        }
     })
-        .then(response => response.json())
-        .catch(error => {
-            console.error('Error updating candidate:', error);
-        });
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error updating candidate:', error);
+    });
 }
 
 // Function to delete a candidate
 function deleteCandidate(candidateId) {
-    return fetch(`https://example.com/candidates/${candidateId}`, {
+    const url = new URL(`${BASE_URL}/candidates/${candidateId}`);
+
+    return fetch(url, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.json())
-        .catch(error => {
-            console.error('Error deleting candidate:', error);
-        });
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error deleting candidate:', error);
+    });
 }
 
 // Function to render candidates in the table
