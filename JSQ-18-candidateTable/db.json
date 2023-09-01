@@ -1,0 +1,40 @@
+{
+  "candidates": [
+    {
+      "id": 1,
+      "name": "John",
+      "lastName": "Doe",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": 2,
+      "name": "Jane",
+      "lastName": "Smith",
+      "phone": "987-654-3210"
+    },
+    {
+      "name": "Leonardo",
+      "lastName": "Faustinos Morales",
+      "phone": "521-963-7592",
+      "id": 3
+    },
+    {
+      "name": "Jessica",
+      "lastName": "Jaurez",
+      "phone": "234-567-8679",
+      "id": 4
+    },
+    {
+      "name": "LORENZO",
+      "lastName": "Valenzuela",
+      "phone": "12343235",
+      "id": 6
+    },
+    {
+      "name": "John",
+      "lastName": "cito",
+      "phone": "654654",
+      "id": 7
+    }
+  ]
+}
