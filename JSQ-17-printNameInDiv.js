@@ -13,12 +13,14 @@ var candidate = {
 };
 
 // Select the second div with class "info"
-const secondInfoDiv = document.querySelector('.info:nth-child(2)');
+const secondInfoDiv = document.querySelector('#body > .info');
+;
 
 // Insert the candidate's first name into the first child of the second div
-const firstNameDiv = secondInfoDiv.querySelector(':first-child');
+const firstNameDiv = secondInfoDiv.children[0];
+console.log(firstNameDiv);
 firstNameDiv.textContent = candidate.name.firstname;
 
 // Insert the full name into the second div using the printName method
-const fullNameDiv = secondInfoDiv.querySelector(':nth-child(2)');
+const fullNameDiv = secondInfoDiv.children[1];  
 fullNameDiv.textContent = candidate.printName();
