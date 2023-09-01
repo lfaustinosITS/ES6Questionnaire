@@ -27,13 +27,7 @@ function sendPersonData(person) {
     url.search = params.toString();
     // Perform the AJAX GET request
     // I'll use Fetch
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(person),
-    })
+    fetch(url)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
