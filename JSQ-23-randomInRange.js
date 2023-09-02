@@ -1,50 +1,44 @@
-
-function getRandomIntInRange(min, max,middle = null) {
-    let oldMiddle = 0;
-    if (min > max) {
-        throw new Error("The minimum value must be less than or equal to the maximum value.");
-    } 
-
-    function generateUniqueNumber() {
-         if (min > max) {
-            throw new Error("The minimum value must be less than or equal to the maximum value.");
-        } 
-        if (min === max){
-            min++
-            return max 
-        }else if (middle===min | middle===max){
-            throw new Error("Not more random numbers");
-
-        }else if (middle){
-            if (max-middle>min-middle){
-                max = middle;
-            } else {
-                min = middle
-            }
-        }
-              
-        const randomIndex = Math.floor(Math.random() * (max - min-1)+1);;
-        const uniqueNumber = min + randomIndex;
-        oldMiddle = middle;
-        middle = uniqueNumber;
-        if (middle === oldMiddle){
-            throw new Error("Not more random numbers");
-        }
-
-
-        
-
-        return uniqueNumber;
+function getRandomInt(min, max) {
+    if (min >= max) {
+      throw new Error("The minimum value must be less than or equal to the maximum value.");
     }
-
-    return generateUniqueNumber;
-}
-
-// Example
-const minNumber = 10;
-const maxNumber = 120;
-const generateRandomNumber = getRandomIntInRange(minNumber, maxNumber);
-
-for (let i = 0; i < (maxNumber - minNumber + 2); i++) {
-    console.log(generateRandomNumber());
-}
+  
+    const range = max - min + 1;
+    let remainingNumbers = new Array(range);
+  
+    for (let i = 0; i < range; i++) {
+      remainingNumbers[i] = min + i;//Make an array with all the numbers in the range
+    }
+  
+    let currentIndex = range;
+    let temporaryValue, randomIndex;//Variables to do the permutation
+  
+    return function() {
+      if (currentIndex <= 0) {
+        throw new Error("Not more random numbers");
+      }
+  
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      
+      //Make te permutation between the random index and the last allowed index
+      temporaryValue = remainingNumbers[currentIndex];
+      remainingNumbers[currentIndex] = remainingNumbers[randomIndex];
+      remainingNumbers[randomIndex] = temporaryValue;
+      
+      //Return the number with the random index at the last allowed index position
+      return remainingNumbers[currentIndex];
+    };
+  }
+  
+  // Example:
+  const min = 10;
+  const max = 20;
+  
+  const getRandomUniqueInt = getRandomInt(min, max);
+  
+  for (let i = 0; i < (max-min)+2; i++) {
+    const randomNum = getRandomUniqueInt();
+    console.log(randomNum);
+  }
+  
