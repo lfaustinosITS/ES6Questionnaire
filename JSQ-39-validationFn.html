@@ -20,15 +20,14 @@
             for (let i = input.length - 1; i >= 0; i--) {
                 reversed += input[i];
             }
-            // List of prohibited strings
-            const prohibitedStrings = ['1234', 'qwert', 'asdf'];
+            
             
             // Function to detect if there are 4 or more succesive keyboard characters in the input
             function consecutiveKeyboardChars(string){
                 for (let i = 0; i < string.length - 3; i++) {
                 const substring = string.substring(i, i + 4).toLowerCase();
                 const regex = new RegExp(substring, 'i');
-                if (regex.test('12345567890qwertyuiopasdfghjklzxcvbnm')) {
+                if (regex.test('12345567890|qwertyuiop|asdfghjkl|nzxcvbnm')) {
                     return true;
                     }
                 }
@@ -36,8 +35,8 @@
                 return false;
             }
 
-            // Check if the input contains any prohibited strings or if the input contains 4 or more consecutive characters from the keyboard, in both forward and reverse orders
-            if (prohibitedStrings.some(str => input.includes(str)) || consecutiveKeyboardChars(input) || prohibitedStrings.some(str => reversed.includes(str)) || consecutiveKeyboardChars(reversed)) {
+            // Check if the input contains 4 or more consecutive characters from the keyboard, in both forward and reverse orders
+            if ( consecutiveKeyboardChars(input) || consecutiveKeyboardChars(reversed)) {
                 return false;
             }
 
