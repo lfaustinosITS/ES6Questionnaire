@@ -10,15 +10,16 @@ function matchPattern(pattern, text) {
                 if (patternIndex === 0) {
                     start = textIndex;
                 }
-                start = textIndex - patternIndex; //Adjust index when there are '*' at the beginning
             }
             patternIndex++;
             textIndex++;
+            
 
-        }else if (pattern[0] === text[textIndex-1]){//If the pattern does not match, but is the first letter of the pattern, start the search again
+        }else if (pattern[0] === text[textIndex]){//If the pattern does not match, but is the first letter of the pattern, start the search again
+            start=textIndex;
             textIndex++;
-            start++;
             patternIndex=1;
+            
         } else if (patternIndex === pattern.length) {//Stop when complete pattern is found
             break
         } else if (textIndex === text.length - 1) {//Stop when the text is finished without finding the pattern
@@ -45,8 +46,12 @@ function matchPattern(pattern, text) {
 }
 
 // Example:
-console.log(matchPattern("lo","lllllllllo"));// Output: lo
-console.log(matchPattern("**o","llllllllllo"));// Output: llo
+console.log(matchPattern("t**o","tatotiotiao"));// Output: tiao
+console.log(matchPattern("to", "tato"));// Output: to
+console.log(matchPattern("t*o", "tato"));// Output: null
+
+console.log(matchPattern("lo", "lllllllllo"));// Output: lo
+console.log(matchPattern("**o", "llllllllllo"));// Output: llo
 
 console.log(matchPattern("a*c", "zykabcd")); // Output: abc
 console.log(matchPattern("a*b", "zxyabcd")); // Output: null
