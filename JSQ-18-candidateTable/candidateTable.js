@@ -30,7 +30,6 @@ function addCandidate(name, lastName, phone) {
             phone: phone
         })
     })
-        .then(response => response.json())
         .catch(error => {
             console.error('Error adding candidate:', error);
         });
@@ -51,7 +50,6 @@ function updateCandidate(candidateId, updatedCandidate) {
             phone: updatedCandidate.phone
         })
     })
-        .then(response => response.json())
         .catch(error => {
             console.error('Error updating candidate:', error);
         });
@@ -67,7 +65,6 @@ function deleteCandidate(candidateId) {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.json())
         .catch(error => {
             console.error('Error deleting candidate:', error);
         });
@@ -117,14 +114,18 @@ function renderCandidates(candidates) {
         tableBody.appendChild(row);
     });
 }
-
+const addForm = document.getElementById('addCandidateForm');
 // Function to handle Add link click
 document.getElementById('addLink').addEventListener('click', function () {
-    const addForm = document.getElementById('addCandidateForm');
+    
+    if(addForm.style.display == 'block'){
+        addForm.style.display = 'none'    
+    }else{
     addForm.style.display = 'block';
+    }
 });
 
-document.getElementById('addCandidateForm').addEventListener('submit', function (event) {
+addForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
     // Get the form input values
@@ -140,10 +141,10 @@ document.getElementById('addCandidateForm').addEventListener('submit', function 
     addCandidate(name, lastName, phone);
 
     // Hide the form
-    const addForm = document.getElementById('addCandidateForm');
     addForm.style.display = 'none';
-    
-}).then(initializeCandidates());
+    initializeCandidates();
+});
+
 
 let isEditing = false;
 
