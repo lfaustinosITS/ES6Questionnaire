@@ -1,10 +1,10 @@
 var async = {
     getAll: function (urlArray, callback) {
-        let promises = []; // Create an array to store all the promises for AJAX calls
+        let results = {}; // Create an object to store all the results for AJAX calls
 
-        urlArray.forEach(function (url, index) {// Perform all AJAX calls and store the promises in the array
-            let promise = new Promise(function (resolve, reject) {
-                fetch(url)// Perform the AJAX call
+        let promises = urlArray.map(function (url, index) {// Perform all AJAX calls and store the results in the promises array
+            
+                return fetch(url)// Perform the AJAX call
                     .then(function (response) {
                         if (response.ok) {
                             return response.json();
@@ -13,27 +13,21 @@ var async = {
                         }
                     })
                     .then(function (data) {
-                        resolve({ [index + 1]: data }); // Resolve the promise with an object containing the result and the corresponding key
+                        results[index + 1]= data; // Resolve the promise with an object containing the result and the corresponding key
                     })
                     .catch(function (error) {
-                        reject(error); // Reject the promise if an error occurs
+                        results[index + 1]= error.message; // Store the error message as a result
                     });
             });
 
-            promises.push(promise);
-        });
-
         // Use Promise.all to wait for all promises to complete
         Promise.all(promises)
-            .then(function (results) {
-                let resultObject = {};// Create an object that contains the results in the expected format
-                results.forEach(function (result) {
-                    Object.assign(resultObject, result);
-                });
-                callback(resultObject);// Call the callback function with the result object as an argument
+            .then(function () {
+                
+                callback(results);// Call the callback function with the result object as an argument
             })
             .catch(function (error) {
-                console.error('Error:', error);
+                throw new Error('Error in promise resolution');
             });
     },
 };
