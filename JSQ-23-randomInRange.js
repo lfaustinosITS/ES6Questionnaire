@@ -2,43 +2,45 @@ function getRandomInt(min, max) {
     if (min >= max) {
       throw new Error("The minimum value must be less than or equal to the maximum value.");
     }
-  
-    const range = max - min + 1;
-    let remainingNumbers = new Array(range);
-  
-    for (let i = 0; i < range; i++) {
-      remainingNumbers[i] = min + i;//Make an array with all the numbers in the range
+    function gcd(x,y){//Greatest common divisor function
+      let M=Math.max(x,y)
+      let m=Math.min(x,y)
+      while(m!==0){
+        let temp = m;
+        m=M%m;
+        M=temp
+      }
+      return M
     }
-  
+    const range = max - min + 1;
+    const inf = Math.floor(range/3);
     let currentIndex = range;
-    let temporaryValue, randomIndex;//Variables to do the permutation
-  
-    return function() {
+    function  randomNumber() { return Math.floor(Math.random() * (range))};
+    let a = randomNumber();
+    while (gcd(range,a)!==1||a<inf){//We are looking for a number that is coprime with the range, to avoiding duplicate numbers, and greater than one-third of the range.
+      a = randomNumber();
+    }
+    
+    let b= randomNumber();
+
+    let sequenceElement = 1;
+    function generateNumbers() {
       if (currentIndex <= 0) {
         throw new Error("Not more random numbers");
       }
-  
-      randomIndex = Math.floor(Math.random() * currentIndex);
+      pseudoRandom = (a*sequenceElement+b)%range//We created a linear function that generates all numbers modulo the range
+      
+      
+      sequenceElement++
       currentIndex--;
-      
-      //Make te permutation between the random index and the last allowed index
-      temporaryValue = remainingNumbers[currentIndex];
-      remainingNumbers[currentIndex] = remainingNumbers[randomIndex];
-      remainingNumbers[randomIndex] = temporaryValue;
-      
-      //Return the number with the random index at the last allowed index position
-      return remainingNumbers[currentIndex];
+      return pseudoRandom + min
     };
+    
+    return generateNumbers;
+
   }
   
-  // Example:
-  const min = 10;
-  const max = 20;
-  
-  const getRandomUniqueInt = getRandomInt(min, max);
-  
-  for (let i = 0; i < (max-min)+2; i++) {
-    const randomNum = getRandomUniqueInt();
-    console.log(randomNum);
+let randomFunction = getRandomInt(-25,-1);
+for(let i =0;i<20;i++){
+console.log(randomFunction())
   }
-  
