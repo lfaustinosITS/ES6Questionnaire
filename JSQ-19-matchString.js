@@ -11,23 +11,25 @@ function matchPattern(pattern, text) {
                     start = textIndex;
                 }
             }
+            ;
             patternIndex++;
             textIndex++;
-            
+        } else if (patternIndex === pattern.length) {//Stop when complete pattern is found
+            break
 
+        } else if (textIndex === text.length - 1) {//Stop when the text is finished without finding the pattern
+            return null;
+        
         }else if (pattern[0] === text[textIndex]){//If the pattern does not match, but is the first letter of the pattern, start the search again
             start=textIndex;
             textIndex++;
             patternIndex=1;
             
-        } else if (patternIndex === pattern.length) {//Stop when complete pattern is found
-            break
-        } else if (textIndex === text.length - 1) {//Stop when the text is finished without finding the pattern
-            return null;
         } else {
             textIndex++;//Continue the search
             if(start!==-1){
-                start++;}//If the pattern has '*' at the start, the beginning of the pattern is moved one place  
+                start++;}//If the pattern has '*' at the start, the beginning of the pattern is moved one place
+
             if (pattern[patternIndex - 1] !== '*') {//Restart the search if the pattern is not complete
                 patternIndex = 0;
                 start = -1
@@ -46,7 +48,8 @@ function matchPattern(pattern, text) {
 }
 
 // Example:
-console.log(matchPattern("t**o","tatotiotiao"));// Output: tiao
+
+console.log(matchPattern("t**o","tatototiao"));// Output: tato
 console.log(matchPattern("to", "tato"));// Output: to
 console.log(matchPattern("t*o", "tato"));// Output: null
 
