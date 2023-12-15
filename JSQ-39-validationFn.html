@@ -20,18 +20,18 @@
             for (let i = input.length - 1; i >= 0; i--) {
                 reversed += input[i];
             }
-            
-            
+
+
             // Function to detect if there are 4 or more succesive keyboard characters in the input
-            function consecutiveKeyboardChars(inputString){
-                const string = inputString.replace(/[.|]/g,' ');
-                console.log(string);
-                for (let i = 0; i < string.length - 3; i++) {
-                const substring = string.substring(i, i + 4).toLowerCase();
-                const regex = new RegExp(substring, 'i');
-                if (regex.test('/1234567890|qwertyuiop|asdfghjkl|zxcvbnm/')) {
-                    console.log('here');
-                    return true;
+            function consecutiveKeyboardChars(inputString) {
+
+                const string = inputString.replace(/[.|+]/g, ' ');
+                const keyboardRegex = /1234567890|qwertyuiop|asdfghjkl|zxcvbnm/i;
+
+                for (let i = 0; i <= string.length - 4; i++) {
+                    const substring = string.substring(i, i + 4).toLowerCase();
+                    if (keyboardRegex.test(substring)) {
+                        return true;
                     }
                 }
 
@@ -39,7 +39,7 @@
             }
 
             // Check if the input contains 4 or more consecutive characters from the keyboard, in both forward and reverse orders
-            if ( consecutiveKeyboardChars(input) || consecutiveKeyboardChars(reversed)) {
+            if (consecutiveKeyboardChars(input) || consecutiveKeyboardChars(reversed)) {
                 return false;
             }
 
