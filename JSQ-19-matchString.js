@@ -2,8 +2,18 @@ function matchPattern(pattern, text) {
     let patternIndex = 0;
     let textIndex = 0;
     let start = -1;
+    let repeatAtStart = 0;
 
+    //Analize the start of the pattern
+    for(i=1;i<pattern.length;i++){
+        if(pattern[0]!==pattern[i]){
+            break
+        }
+        repeatAtStart++
+    }
+    
     while (textIndex < text.length) {
+        
         //Search for pattern matches within the text
         if (patternIndex < pattern.length && (pattern[patternIndex] === text[textIndex] || pattern[patternIndex] === '*')) {
             if (start === -1) {
@@ -20,10 +30,17 @@ function matchPattern(pattern, text) {
         } else if (textIndex === text.length - 1) {//Stop when the text is finished without finding the pattern
             return null;
         
-        }else if (pattern[0] === text[textIndex]){//If the pattern does not match, but is the first letter of the pattern, start the search again
-            start=textIndex;
-            textIndex++;
-            patternIndex=1;
+        }else if (pattern[0] === text[textIndex]){//If the pattern does not match, but is the first letter of the pattern
+            if(repeatAtStart!==0&& repeatAtStart==patternIndex-1){//If the first letter of the pattern repeats and it's possible that it occurs multiple times in the string, the search continues.
+                start++
+                textIndex++
+            }else{//Start the search again
+                start=textIndex;
+                textIndex++;
+                patternIndex=1;
+            }
+            
+            
             
         } else {
             textIndex++;//Continue the search
@@ -47,7 +64,7 @@ function matchPattern(pattern, text) {
 
 }
 
-// Example:
+Example:
 
 console.log(matchPattern("t**o","tatototiao"));// Output: tato
 console.log(matchPattern("to", "tato"));// Output: to
@@ -60,3 +77,6 @@ console.log(matchPattern("a*c", "zykabcd")); // Output: abc
 console.log(matchPattern("a*b", "zxyabcd")); // Output: null
 console.log(matchPattern("**a***", "zcvcabcd")); // Output: vcabcd
 console.log(matchPattern("a****", "zxcabcd"));  // Output: null
+
+
+console.log(matchPattern("lllla", "bvclllllllaa"));//Output: lllla
