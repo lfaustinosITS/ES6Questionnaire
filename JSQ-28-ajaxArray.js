@@ -24,7 +24,7 @@ var async = {
         Promise.all(promises)
             .then(function () {
                 
-                callback.call(results, results);// Call the callback function with the result object as both the context and argument
+                callback.call(results);// Call the callback function with the 'results' object as the context (this)
             })
             .catch(function (error) {
                 throw new Error('Error in promise resolution');
